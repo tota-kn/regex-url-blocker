@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "RegexUrlBlocker",
+    "version": "1.0",
+    "description": "正規表現で指定したURLを表示した際に、リダイレクトする",
+    "background": {
+        "service_worker": "main.js"
+    },
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "scripting"
+    ]
+}
