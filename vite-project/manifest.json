@@ -1,6 +1,15 @@
 {
     "manifest_version": 3,
-    "name": "CRXJS Vue Vite Example",
+    "name": "V2  CRXJS Vue Vite Example",
     "version": "1.0.0",
-    "action": { "default_popup": "index.html" }
+    "permissions": [
+        "identity",
+        "storage",
+        "tabs"
+    ],
+    "action": {
+        "default_title": "regex url blocker",
+        "default_popup": "index.html"
+    },
+    "options_page": "option/index.html"
 }
