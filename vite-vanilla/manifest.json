@@ -1,7 +1,25 @@
 {
     "manifest_version": 3,
-    "name": "CRXJS Vanilla JS Example",
-    "version": "1.0.0",
-    "action": { "default_popup": "src/pages/popup/index.html" },
+    "name": "regex url blocker(test)",
+    "version": "0.1",
+    "permissions": [
+        "identity",
+        "storage",
+        "tabs"
+    ],
+    "icons": {
+        "16": "src/assets/icon16.png",
+        "48": "src/assets/icon48.png",
+        "128": "src/assets/icon128.png"
+    },
+    "action": { 
+        "default_popup": "src/pages/popup/index.html",
+        "default_title": "regex url blocker",
+        "default_icon": {
+            "16": "src/assets/icon16.png",
+            "48": "src/assets/icon48.png",
+            "128": "src/assets/icon128.png"
+        }
+    },
     "options_page": "src/pages/option/index.html"
 }
