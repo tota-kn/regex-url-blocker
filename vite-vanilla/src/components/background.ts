@@ -19,9 +19,10 @@ const updateTab = (tab: chrome.tabs.Tab, url: string) => {
 
 chrome.tabs.onUpdated.addListener(async () => {
     const currentTab = await getCurrentTab()
-    const blockUrls = await getSyncStorage("blockUrls")
-    // block(currentTab, blockUrls);
-    block(currentTab, [".*youtube.*"]);
+    const blockUrls = await getSyncStorage("blockUrls") ?? []
+    block(currentTab, blockUrls);
+    console.log(currentTab);
+    console.log(blockUrls);
 })
 
 
