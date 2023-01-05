@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "CRXJS Vue Vite Example",
+    "version": "1.0.0",
+    "permissions": [
+        "identity",
+        "storage",
+        "tabs"
+    ],
+    "action": { "default_popup": "src/pages/popup/index.html" },
+    "options_page": "src/pages/option/index.html",
+    "background": { "service_worker": "src/scripts/background.ts" }
+}

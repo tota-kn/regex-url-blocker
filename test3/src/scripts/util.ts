@@ -1,5 +1,10 @@
 const getSyncStorage = async(key: string) => {
     const result = await chrome.storage.sync.get(key)
+
+    if(!result){
+        return null
+    }
+    
     return result[key]
 }
 

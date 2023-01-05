@@ -11,7 +11,7 @@ const block = async (tab: chrome.tabs.Tab, urls: string[]) => {
 }
 
 const updateTab = (tab: chrome.tabs.Tab, url: string) => {
-    if(tab.id === undefined){
+    if(!tab.id){
         return
     }
     chrome.tabs.update(tab.id, { url })
@@ -19,10 +19,8 @@ const updateTab = (tab: chrome.tabs.Tab, url: string) => {
 
 chrome.tabs.onUpdated.addListener(async () => {
     const currentTab = await getCurrentTab()
-    const blockUrls = await getSyncStorage("blockUrls") ?? []
+    const blockUrls = await getSyncStorage("blockUrls")
     block(currentTab, blockUrls);
-    console.log(currentTab);
-    console.log(blockUrls);
 })
 
 
