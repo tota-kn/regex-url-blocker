@@ -8,11 +8,6 @@ const state = reactive({
   newBlockUrl: ""
 })
 
-    // ".*.youtube.com/*$",
-    // ".*.twitter.com/home/*$",
-    // ".*.anond.hatelabo.jp/.*",
-    // ".*.togetter.com/*$",
-
 onMounted(async () => {
   loadRedirectUrl()
   loadBlockUrls()
