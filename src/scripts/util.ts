@@ -25,8 +25,20 @@ const openOption = () => {
     chrome.runtime.openOptionsPage()
 }
 
+const isContained = (text:string, patterns: string[]) => {
+    for (const p of patterns) {
+        const result = text.match(p)
+        if (result !== null) {
+            return true
+        }
+    }
+    return false
+}
+
 export {
     getSyncStorage,
     setSyncStorage,
-    getCurrentTab
+    getCurrentTab,
+    openOption,
+    isContained
 }

@@ -5,7 +5,9 @@ import { getSyncStorage, setSyncStorage } from "../scripts/util"
 const state = reactive({
   redirectUrl: "",
   blockUrls: [""],
-  newBlockUrl: ""
+  newBlockUrl: "",
+  beforeRedirectUrl: "",
+  beforeBlockUrls: []
 })
 
 onMounted(async () => {
@@ -14,15 +16,37 @@ onMounted(async () => {
 })
 
 const loadRedirectUrl = async () => {
-  state.redirectUrl = await getSyncStorage("redirectUrl") ?? ""
+  let redirectUrl = await getSyncStorage("redirectUrl")
+  if(!redirectUrl){
+    const defaultValue = "https://www.google.co.jp/"
+    setRedirectUrl(defaultValue)
+    redirectUrl = defaultValue
+  }
+
+  state.beforeRedirectUrl = redirectUrl
+  state.redirectUrl = redirectUrl
 }
 
 const setRedirectUrl = async (redirectUrl: string) => {
   await setSyncStorage("redirectUrl", redirectUrl)
+
+  state.beforeRedirectUrl = redirectUrl
+  state.redirectUrl = redirectUrl
+}
+
+const isRedirectUrlSaved = () => {
+  return state.beforeRedirectUrl === state.redirectUrl
 }
 
 const loadBlockUrls = async () => {
-  state.blockUrls = await getSyncStorage("blockUrls") ?? []
+  const blockUrls = await getSyncStorage("blockUrls")
+  if(!blockUrls){
+    const defaultValue: string[] = []
+    setBlockUrls(defaultValue)
+  }
+
+  state.beforeBlockUrls = blockUrls
+  state.blockUrls = blockUrls
 }
 
 const setBlockUrls = async (blockUrls: string[]) => {
@@ -43,8 +67,8 @@ const deleteBlockUrl = (index: number) => {
   <div>
     <h2>redirect url</h2>
     <input v-model="state.redirectUrl">
-    <button @click="setRedirectUrl(state.redirectUrl)">save</button>
-    <button @click="loadRedirectUrl()">reload</button>
+    <button v-bind:disabled="isRedirectUrlSaved()" @click="setRedirectUrl(state.redirectUrl)">save</button>
+    <button v-bind:disabled="isRedirectUrlSaved()" @click="loadRedirectUrl()">reload</button>
 
     <h2>block url list</h2>
     <div v-for="(item, index) in state.blockUrls" :key="index">

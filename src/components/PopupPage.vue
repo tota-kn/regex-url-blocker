@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, reactive, toRaw } from "vue";
-import { getCurrentTab, getSyncStorage, setSyncStorage } from "../scripts/util"
+import { getCurrentTab, getSyncStorage, setSyncStorage, openOption, isContained } from "../scripts/util"
 
 const state = reactive({ 
   url: "",
@@ -27,21 +27,6 @@ const addBlockUrl = async (url:string) => {
   loadBlockUrls()
 }
 
-const isAdded = (url:string, blockUrls: string[]) => {
-  for (const blockUrl of blockUrls) {
-        const result = url.match(blockUrl)
-        console.log(result)
-        if (result !== null) {
-          return true
-        }
-    }
-  return false
-}
-
-const openOptionPage= () => {
-    chrome.runtime.openOptionsPage()
-}
-
 </script>
 
 <template>
@@ -49,12 +34,12 @@ const openOptionPage= () => {
       <input class="input" v-model="state.url">
       <button 
         @click="addBlockUrl(state.url)"
-        v-bind:disabled="isAdded(state.url, state.blockUrls)">
-        add
+        v-bind:disabled="isContained(state.url, state.blockUrls)">
+        {{ isContained(state.url, state.blockUrls) ? "added" : "add"}}
       </button>
 
     <h2>Edit blocked urls</h2>
-    <button @click="openOptionPage">Open option</button>
+    <button @click="openOption()">Open option</button>
   </div>
 </template>
 
