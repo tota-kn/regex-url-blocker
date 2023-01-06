@@ -10,6 +10,8 @@ const block = async (tab: chrome.tabs.Tab, urls: string[]) => {
     }
 }
 
+
+
 const updateTab = (tab: chrome.tabs.Tab, url: string) => {
     if(!tab.id){
         return

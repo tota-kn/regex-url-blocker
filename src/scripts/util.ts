@@ -21,6 +21,10 @@ const getCurrentTab = async () => {
     return tabs[0];
 }
 
+const openOption = () => {
+    chrome.runtime.openOptionsPage()
+}
+
 export {
     getSyncStorage,
     setSyncStorage,

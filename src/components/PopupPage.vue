@@ -26,16 +26,35 @@ const addBlockUrl = async (url:string) => {
   await setSyncStorage("blockUrls", toRaw(state.blockUrls))
   loadBlockUrls()
 }
+
+const isAdded = (url:string, blockUrls: string[]) => {
+  for (const blockUrl of blockUrls) {
+        const result = url.match(blockUrl)
+        console.log(result)
+        if (result !== null) {
+          return true
+        }
+    }
+  return false
+}
+
+const openOptionPage= () => {
+    chrome.runtime.openOptionsPage()
+}
+
 </script>
 
 <template>
   <div class="popup">
-    <h2>current url</h2>
-      <input v-model="state.url">
-      <button @click="addBlockUrl(state.url)">add</button>
+      <input class="input" v-model="state.url">
+      <button 
+        @click="addBlockUrl(state.url)"
+        v-bind:disabled="isAdded(state.url, state.blockUrls)">
+        add
+      </button>
 
-    <h2>blocked urls</h2>
-    <div v-for="url in state.blockUrls" :key="url">{{ url }}</div>
+    <h2>Edit blocked urls</h2>
+    <button @click="openOptionPage">Open option</button>
   </div>
 </template>
 
@@ -43,5 +62,8 @@ const addBlockUrl = async (url:string) => {
 .popup {
   padding: 10px;
   min-width: 200px; 
+}
+.input {
+  min-width: 300px; 
 }
 </style>

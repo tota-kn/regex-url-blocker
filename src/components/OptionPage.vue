@@ -51,13 +51,11 @@ const deleteBlockUrl = (index: number) => {
       <input v-model="state.blockUrls[index]">
       <button @click="deleteBlockUrl(index)">delete</button>
     </div>
+    <input v-model="state.newBlockUrl">
+    <button @click="addBlockUrl(state.newBlockUrl)">add</button>
     <div>
       <button @click="setBlockUrls(state.blockUrls)">save</button>
       <button @click="loadBlockUrls()">reload</button>
-    </div>
-    <div>
-      <input v-model="state.newBlockUrl">
-      <button @click="addBlockUrl(state.newBlockUrl)">add</button>
     </div>
   </div>
 </template>
