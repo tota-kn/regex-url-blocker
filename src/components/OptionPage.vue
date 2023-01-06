@@ -7,7 +7,7 @@ const state = reactive({
   blockUrls: [""],
   newBlockUrl: "",
   beforeRedirectUrl: "",
-  beforeBlockUrls: []
+  beforeBlockUrls: [""]
 })
 
 onMounted(async () => {
@@ -39,18 +39,26 @@ const isRedirectUrlSaved = () => {
 }
 
 const loadBlockUrls = async () => {
-  const blockUrls = await getSyncStorage("blockUrls")
+  let blockUrls = await getSyncStorage("blockUrls")
   if(!blockUrls){
     const defaultValue: string[] = []
     setBlockUrls(defaultValue)
+    blockUrls = defaultValue 
   }
 
-  state.beforeBlockUrls = blockUrls
-  state.blockUrls = blockUrls
+  state.beforeBlockUrls = blockUrls.concat()
+  state.blockUrls = blockUrls.concat()
 }
 
 const setBlockUrls = async (blockUrls: string[]) => {
   await setSyncStorage("blockUrls", toRaw(blockUrls))
+
+  state.beforeBlockUrls = blockUrls.concat()
+  state.blockUrls = blockUrls.concat()
+}
+
+const isBlockUrlsSaved = () => {
+  return state.beforeBlockUrls.toString() === state.blockUrls.toString()
 }
 
 const addBlockUrl = (url:string) => {
@@ -78,8 +86,8 @@ const deleteBlockUrl = (index: number) => {
     <input v-model="state.newBlockUrl">
     <button @click="addBlockUrl(state.newBlockUrl)">add</button>
     <div>
-      <button @click="setBlockUrls(state.blockUrls)">save</button>
-      <button @click="loadBlockUrls()">reload</button>
+      <button v-bind:disabled="isBlockUrlsSaved()" @click="setBlockUrls(state.blockUrls)">save</button>
+      <button v-bind:disabled="isBlockUrlsSaved()" @click="loadBlockUrls()">reload</button>
     </div>
   </div>
 </template>
