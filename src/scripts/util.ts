@@ -26,6 +26,10 @@ const openOption = () => {
 }
 
 const isContained = (text:string, patterns: string[]) => {
+    if(!patterns){
+        return false
+    }
+
     for (const p of patterns) {
         const result = text.match(p)
         if (result !== null) {

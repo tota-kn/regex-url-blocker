@@ -1,6 +1,9 @@
 import { getSyncStorage, getCurrentTab } from "./util"
 
-const block = async (tab: chrome.tabs.Tab, urls: string[]) => { 
+const block = async (tab: chrome.tabs.Tab, urls: string[]) => {
+    if(!urls){
+        return
+    } 
     for (const url of urls) {
         const result = tab.url?.match(url)
         if (result !== null) {
